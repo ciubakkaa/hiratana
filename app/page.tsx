@@ -21,15 +21,14 @@ export default function Home() {
     const fetchWords = async () => {
       try {
         const res = await fetch('/api/words');
-        const data: any = await res.json();
+        const data = await res.json();
 
         // Assume the API returns an array of words with 'romaji' and 'hiragana' fields
         setAvailableWords(data.words);
         setCurrentWord(data.words[0]);
 
         // Extract unique hiragana characters from the words
-        // @ts-ignore
-        const chars = [...new Set(data.words.map((word: Word) => word.hiragana).join(''))];
+        const chars = [data.words.map((word: Word) => word.hiragana).join('')];
         setHiraganaChars(chars.join(''));
       } catch (err) {
         console.error('Failed to fetch words:', err);
